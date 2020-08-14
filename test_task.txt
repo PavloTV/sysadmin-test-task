@@ -9,7 +9,7 @@ cat /var/log/nginx/access.log | grep -P "([:][/][/]example.com)?[/]page2" | grep
 
 3.
 
-dd bs=64M if=/dev/sdb | ssh user@another_server_private_ip "dd bs=64M of=/dev/sdb" status=progress
+dd bs=64M if=/dev/sdb | ssh user@another_server_private_ip "dd bs=64M of=/dev/sdb status=progress"
 
 4.
 
