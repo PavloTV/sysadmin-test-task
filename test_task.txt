@@ -1,6 +1,13 @@
 1.
 
-cat /var/log/nginx/access.log | grep -P "([:][/][/]example.com)?[/]page2" | grep -P -o "[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}" | xargs -n1 ipset -! add BLOCK
+Только обращения к /page2:
+cat /var/log/nginx/access.log | grep -P "([ ])[/]page2" | grep -P -o "[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}" | xargs -n1 ipset -! add BLOCK
+
+Только обращения к example.com/page2:
+cat /var/log/nginx/access.log | grep -P "([:][/][/]example.com)[/]page2" | grep -P -o "[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}" | xargs -n1 ipset -! add BLOCK
+
+Обращения к /page2 и example.com/page2
+cat /var/log/nginx/access.log | grep -P "([:][/][/]example.com|[ ])[/]page2" | grep -P -o "[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}" | xargs -n1 ipset -! add BLOCK
 
 2.
 
