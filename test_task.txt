@@ -1,0 +1,40 @@
+1.
+
+cat /var/log/nginx/access.log | grep -P "([:][/][/]example.com)?[/]page2" | grep -P -o "[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}" | xargs -n1 ipset -! add BLOCK
+
+2.
+
+1. tcpdump -c 1000 -i em1 'tcp[tcpflags] == tcp-syn' -w /tmp/tcpdump.pcap
+2. tcpdump -r /tmp/tcpdump.pcap -nn -t | sort | awk -F ' ' '{print $2}' | grep -P -o "[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}" | uniq -c
+
+3.
+
+dd bs=64M if=/dev/sdb | ssh user@another_server_private_ip "dd bs=64M of=/dev/sdb" status=progress
+
+4.
+
+https://s.pikabu.ru/page/interview/sysadmin/img/graph1.png
+
+Железный сервер
+
+Предположительно 4-ре вычислительных ядра и HDD диск
+На хосте запущены виртуальные гостевые системы
+Для задач в userspace не настроены приоритеты
+
+Рекомендации:
+Под нагрузко заменто возрастают задержки обращения к дисковому устройству
+Для увеличения производительности системы требуется замена на более быстрый накопитель SSD или как мимимум провести оптимизацию настроек
+
+
+https://s.pikabu.ru/page/interview/sysadmin/img/graph2.png
+
+
+Виртуальный сервер
+
+Предположительно 2 виртуальных ядра и SSD диск
+Основная нагрузка в user space
+Для задач в userspace не настроены приоритеты
+
+
+Рекомендации:
+Небольшой запас по процессору, возможно требуется добавить виртуальных ядер
